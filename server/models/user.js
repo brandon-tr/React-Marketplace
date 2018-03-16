@@ -32,13 +32,11 @@ var UserSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      unique: true,
       required: [true, "You need to have a first name"],
       validate: NameValidator
     },
     lastName: {
       type: String,
-      unique: true,
       required: [true, "You need to have a last name"],
       validate: NameValidator
     },
@@ -49,6 +47,7 @@ var UserSchema = new mongoose.Schema(
     },
     email: {
       type: String,
+      unique: true,
       required: [true, "You need to have a email"],
       validate: EmailValidator
     }

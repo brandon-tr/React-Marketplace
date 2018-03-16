@@ -24,9 +24,17 @@ export const register = user => {
       });
 };
 
-export const login = () => {
-  return {
-    type: "LOGIN",
-    payload: "hi"
-  };
+export const login = user => {
+  return dispatch =>
+    axios
+      .post("/login", {
+        email: user.email,
+        password: user.pass
+      })
+      .then(res => {
+        dispatch({ type: "LOGIN", payload: res });
+      })
+      .catch(res => {
+        dispatch({ type: "ERROR", payload: res });
+      });
 };

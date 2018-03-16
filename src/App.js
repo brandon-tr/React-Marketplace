@@ -7,7 +7,8 @@ import { returnHi } from "./redux/actions/actions";
 import { Route, Link, withRouter } from "react-router-dom";
 import Home from "./components/home";
 import CreateProduct from "./components/CreateProduct";
-import RegisterForm from "./components/authentication/register";
+import Register from "./components/authentication/register";
+import Login from "./components/authentication/login";
 
 class App extends Component {
   render() {
@@ -29,14 +30,19 @@ class App extends Component {
               <Link to="/product-creation"> Product Creation </Link>
             </li>
             {localStorage.getItem("token") === null ? (
-              <li>
-                <Link to="/register"> Register</Link>
-              </li>
+              <span>
+                <li>
+                  <Link to="/register"> Register</Link>
+                </li>
+                <li>
+                  <Link to="/login"> Login</Link>
+                </li>
+              </span>
             ) : null}
           </ul>
           <Route path="/" exact component={Home} />
-          <Route path="/register" component={RegisterForm} />
-          <Route path="/login" component={Home} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
           <Route path="/product-list" component={CreateProduct} />
           <Route path="/product/:id" component={CreateProduct} />
         </div>

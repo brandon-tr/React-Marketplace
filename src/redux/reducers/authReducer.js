@@ -7,7 +7,7 @@ export default (state = null, action) => {
       return update(state, { $set: action.payload.data.response });
     case "LOGIN":
       localStorage.setItem("token", action.payload.data.token);
-      return update(state, { $set: action.payload.data.response });
+      return update(state, { $set: action.payload.data });
     case "ERROR":
       return update(state, { $set: action.payload.response.data.response });
     default:

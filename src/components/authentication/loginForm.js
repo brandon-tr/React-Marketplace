@@ -1,16 +1,24 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, Form } from "redux-form";
+import {
+  maxLength,
+  minLength2,
+  required,
+  email,
+  renderField
+} from "./validations";
 
 const LoginForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+  const { handleSubmit } = props;
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <div>
         <label>Email</label>
         <div>
           <Field
             name="email"
-            component="input"
+            component={renderField}
+            validate={[required, email]}
             type="email"
             placeholder="Email"
           />
@@ -20,22 +28,21 @@ const LoginForm = props => {
         <label>Password</label>
         <div>
           <Field
-            name="password"
-            component="input"
+            name="pass"
+            component={renderField}
+            validate={[required, minLength2]}
             type="password"
-            placeholder="First Name"
+            placeholder="Password"
           />
         </div>
       </div>
       <div>
-        <button type="submit" disabled={pristine || submitting}>
-          Submit
-        </button>
+        <button type="submit">Submit</button>
       </div>
-    </form>
+    </Form>
   );
 };
 
 export default reduxForm({
-  form: "login" // a unique identifier for this form
+  form: "login"
 })(LoginForm);

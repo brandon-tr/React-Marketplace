@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { register } from "../../redux/actions/actions";
 import keyGen from "../../idGen";
+import "./style.css";
 
 class Register extends Component {
   handleSubmit = e => {
@@ -16,11 +17,15 @@ class Register extends Component {
         <Form onSubmit={this.handleSubmit} />
         {this.props.status ? (
           !Array.isArray(this.props.status) ? (
-            <span>{this.props.status} </span>
+            <span className="success">{this.props.status} </span>
           ) : (
             <ul>
               {this.props.status.map(err => {
-                return <li key={keyGen()}>{err} </li>;
+                return (
+                  <li key={keyGen()} className="error">
+                    {err}
+                  </li>
+                );
               })}
             </ul>
           )
@@ -31,7 +36,6 @@ class Register extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     status: state.auth
   };

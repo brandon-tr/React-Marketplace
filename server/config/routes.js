@@ -39,26 +39,27 @@ module.exports = function(app, path) {
     });
   });
   app.post("/login", function(req, res) {
-    User.findOne({ name: req.body.username }, function(err, user) {
+    User.findOne({ email: req.body.email }, function(err, user) {
       if (user) {
         bcrypt.compare(req.body.password, user.password, function(
           err,
           response
         ) {
           if (err) {
-            res.status(401).json(err);
+            res.status(401).json({ response: "Please try again" });
           } else {
             if (response) {
               const token = jwt.sign(req.body, secret);
-              return res.status(200).json(token);
+              return res
+                .status(200)
+                .json({ token: token, success: "Successfully logged in" });
             } else {
-              res.status(401).json({ message: "Please try again" });
+              res.status(401).json({ response: "Please try again" });
             }
           }
         });
       } else {
-        console.log(err);
-        res.status(401).json({ message: "Please try again" });
+        res.status(401).json({ response: "Please try again" });
       }
     });
   });

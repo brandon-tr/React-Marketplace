@@ -9,7 +9,7 @@ import {
 } from "./validations";
 
 const RegisterForm = props => {
-  const { handleSubmit, pristine, submitting } = props;
+  const { handleSubmit, submitting } = props;
   return (
     <Form onSubmit={handleSubmit}>
       <div>
