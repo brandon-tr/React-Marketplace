@@ -38,3 +38,20 @@ export const login = user => {
         dispatch({ type: "ERROR", payload: res });
       });
 };
+
+export const addProduct = (product, file) => {
+  const fd = new FormData();
+  fd.append("image", file.target.files[0], file.target.files[0].name);
+  fd.append("name", product.name);
+  fd.append("description", product.description);
+  fd.append("price", product.price);
+  return dispatch =>
+    axios
+      .post("/addProduct", fd)
+      .then(res => {
+        dispatch({ type: "ADD_PRODUCT", payload: res });
+      })
+      .catch(res => {
+        dispatch({ type: "ERROR_PRODUCT", payload: res });
+      });
+};

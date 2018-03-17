@@ -18,7 +18,7 @@ class Login extends Component {
           this.props.status.success ? (
             <span className="success">{this.props.status.success}</span>
           ) : (
-            <span className="error">{this.props.status.response} </span>
+            <span className="error"> {this.props.status} </span>
           )
         ) : null}
       </div>

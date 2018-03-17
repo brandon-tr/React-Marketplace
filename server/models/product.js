@@ -19,14 +19,25 @@ var PriceValidator = [
     message: "Price should only be a number"
   })
 ];
+var DescriptionValidator = [
+  validate({
+    validator: "isLength",
+    arguments: [10],
+    message: "Description should be at least 10 characters long"
+  })
+];
 
 var ProductSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      unique: true,
       required: [true, "You need to have a first name"],
       validate: NameValidator
+    },
+    name: {
+      type: String,
+      required: [true, "You need to have a first name"],
+      validate: DescriptionValidator
     },
     price: {
       type: Number,

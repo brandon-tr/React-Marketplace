@@ -1,0 +1,8 @@
+.error {
+  color: red;
+  list-style-type: none;
+}
+.success {
+  color: green;
+  font-weight: bold;
+}

@@ -1,12 +1,6 @@
 import React from "react";
 import { Field, reduxForm, Form } from "redux-form";
-import {
-  maxLength,
-  minLength2,
-  required,
-  email,
-  renderField
-} from "./validations";
+import { minLength2, required, email, renderField } from "../validations";
 
 const RegisterForm = props => {
   const { handleSubmit, submitting } = props;
@@ -29,7 +23,6 @@ const RegisterForm = props => {
         <div>
           <Field
             name="lastName"
-            component="input"
             component={renderField}
             validate={[required, minLength2]}
             type="text"
@@ -42,7 +35,6 @@ const RegisterForm = props => {
         <div>
           <Field
             name="pass"
-            component="input"
             component={renderField}
             validate={required}
             type="password"
@@ -55,7 +47,8 @@ const RegisterForm = props => {
         <div>
           <Field
             name="email"
-            component="input"
+            component={renderField}
+            validate={[required, email]}
             type="email"
             placeholder="Email"
           />

@@ -13,6 +13,10 @@ export const email = value =>
     ? "Invalid email address"
     : undefined;
 // ---------------------------------------------------------------
+const minNumber = min => value =>
+  value <= min ? `Must be greater than ${min}` : undefined;
+export const minNumber01 = minNumber(0.01);
+
 export const renderField = ({
   input,
   label,
@@ -23,6 +27,46 @@ export const renderField = ({
     <label>{label}</label>
     <div>
       <input {...input} placeholder={label} type={type} />
+      {touched &&
+        ((error && (
+          <span style={{ color: "red", display: "block", padding: "10px" }}>
+            {error}
+          </span>
+        )) ||
+          (warning && <span>{warning}</span>))}
+    </div>
+  </div>
+);
+export const uploadField = ({
+  input: { value, ...inputProps },
+  label,
+  type,
+  meta: { touched, error, warning, omitMeta },
+  ...props
+}) => (
+  <div>
+    <div>
+      <input {...inputProps} {...props} type="file" name="image" />
+      {touched &&
+        ((error && (
+          <span style={{ color: "red", display: "block", padding: "10px" }}>
+            {error}
+          </span>
+        )) ||
+          (warning && <span>{warning}</span>))}
+    </div>
+  </div>
+);
+export const textArea = ({
+  input,
+  label,
+  type,
+  meta: { touched, error, warning }
+}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <textarea {...input} placeholder={label} type={type} />
       {touched &&
         ((error && (
           <span style={{ color: "red", display: "block", padding: "10px" }}>

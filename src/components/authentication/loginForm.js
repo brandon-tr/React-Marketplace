@@ -1,12 +1,6 @@
 import React from "react";
 import { Field, reduxForm, Form } from "redux-form";
-import {
-  maxLength,
-  minLength2,
-  required,
-  email,
-  renderField
-} from "./validations";
+import { minLength2, required, email, renderField } from "../validations";
 
 const LoginForm = props => {
   const { handleSubmit } = props;
