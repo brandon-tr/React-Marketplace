@@ -6,38 +6,51 @@ import CreateProduct from "./product/CreateProduct";
 import { Route, Link } from "react-router-dom";
 import { AuthRoute, CheckAuthPages } from "../routeAuth";
 import productList from "./product/productList";
+import { AppBar, Tabs, Tab } from "material-ui";
 
 const Routes = () => {
+  const styles = {
+    appBar: {
+      flexWrap: "wrap"
+    },
+    tabs: {
+      width: "60%"
+    }
+  };
   return (
     <div>
-      <ul className="links">
-        <li>
-          <Link to="/"> Home </Link>
-        </li>
-        <li>
-          <Link to="/product-list"> Product List </Link>
-        </li>
-        {localStorage.getItem("token") === null ? (
-          <span>
-            <li>
-              <Link to="/register"> Register</Link>
-            </li>
-            <li>
-              <Link to="/login"> Login</Link>
-            </li>
-          </span>
-        ) : (
-          <li>
-            <Link to="/product-creation"> Product Creation </Link>
-          </li>
-        )}
-      </ul>
-      <Route path="/" exact component={Home} />
-      <CheckAuthPages path="/register" component={Register} />
-      <CheckAuthPages path="/login" component={Login} />
-      <AuthRoute path="/product-creation" component={CreateProduct} />
-      <Route path="/product-list" component={productList} />
-      <Route path="/product/:id" component={CreateProduct} />
+      <AppBar
+        title="React Marketplace"
+        showMenuIconButton={false}
+        style={styles.appBar}
+      >
+        <Tabs style={styles.tabs}>
+          <Tab label="Home" containerElement={<Link to="/" />} />
+          <Tab
+            label="Product List"
+            containerElement={<Link to="/product-list" />}
+          />
+          {localStorage.getItem("token") ? (
+            <Tab
+              label="Create Product"
+              containerElement={<Link to="/product-creation" />}
+            />
+          ) : (
+            <Tab label="Login" containerElement={<Link to="/login" />} />
+          )}
+          {localStorage.getItem("token") === null ? (
+            <Tab label="Register" containerElement={<Link to="/register" />} />
+          ) : null}
+        </Tabs>
+      </AppBar>
+      <div className="container">
+        <Route path="/" exact component={Home} />
+        <CheckAuthPages path="/register" component={Register} />
+        <CheckAuthPages path="/login" component={Login} />
+        <AuthRoute path="/product-creation" component={CreateProduct} />
+        <Route path="/product-list" component={productList} />
+        <Route path="/product/:id" component={CreateProduct} />
+      </div>
     </div>
   );
 };

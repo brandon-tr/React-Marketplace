@@ -8,49 +8,47 @@ import {
   minNumber01,
   uploadField
 } from "../validations";
+import { RaisedButton } from "material-ui";
+import "./style.css";
 
 const CreateProductForm = props => {
   const { handleSubmit, handleChange } = props;
   return (
     <Form onSubmit={handleSubmit}>
-      <div>
-        <label>Name</label>
+      <div className="pb-5">
         <div>
           <Field
             name="name"
             component={renderField}
             validate={[required]}
             type="text"
-            placeholder="Name"
+            label="Name"
           />
         </div>
       </div>
-      <div>
-        <label>Description</label>
+      <div className="pb-5">
         <div>
           <Field
             name="description"
             component={textArea}
             validate={[required, minLength2]}
             type="textarea"
-            placeholder="Description"
+            label="Description"
           />
         </div>
       </div>
-      <div>
-        <label>Price</label>
+      <div className="pb-5">
         <div>
           <Field
             name="price"
             component={renderField}
             validate={[required, minNumber01]}
             type="number"
-            placeholder="Price"
+            label="Price"
           />
         </div>
       </div>
-      <div>
-        <label>Image</label>
+      <div className="pb-5">
         <div>
           <Field
             name="image"
@@ -60,8 +58,13 @@ const CreateProductForm = props => {
           />
         </div>
       </div>
+      <div className="pb-5 products">
+        {props ? props.image ? <img src={props.image} /> : null : null}
+      </div>
       <div>
-        <button type="submit">Submit</button>
+        <RaisedButton primary={true} type="submit" fullWidth={true}>
+          Submit
+        </RaisedButton>
       </div>
     </Form>
   );

@@ -82,7 +82,6 @@ export const imageRecognition = () => {
 };
 
 export const addProduct = product => {
-  console.log(product);
   const fd = new FormData();
   fd.append("image", product.image[0], product.image[0].name);
   fd.append("name", product.name);

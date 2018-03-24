@@ -31,7 +31,11 @@ class CreateProduct extends Component {
     return (
       <div>
         <p>Welcome to Product Creation</p>
-        <Form onSubmit={this.handleSubmit} handleChange={this.handleChange} />
+        <Form
+          onSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          image={this.props.image}
+        />
         {this.props.status ? (
           this.props.status.error ? (
             <span className="error">{this.props.status.error} </span>
@@ -39,9 +43,6 @@ class CreateProduct extends Component {
             <span className="success">{this.props.status} </span>
           )
         ) : null}
-        <div className="products">
-          {this.props.image ? <img src={this.props.image} /> : null}
-        </div>
       </div>
     );
   }

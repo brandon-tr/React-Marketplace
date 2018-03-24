@@ -1,4 +1,6 @@
 import React from "react";
+import { TextField, RaisedButton } from "material-ui";
+import "./product/style.css";
 
 export const required = value => (value ? undefined : "Required");
 // ---------------------------------------------------------------
@@ -24,9 +26,14 @@ export const renderField = ({
   meta: { touched, error, warning }
 }) => (
   <div>
-    <label>{label}</label>
     <div>
-      <input {...input} placeholder={label} type={type} />
+      <TextField
+        {...input}
+        placeholder={label}
+        type={type}
+        fullWidth={true}
+        floatingLabelText={label}
+      />
       {touched &&
         ((error && (
           <span style={{ color: "red", display: "block", padding: "10px" }}>
@@ -46,7 +53,9 @@ export const uploadField = ({
 }) => (
   <div>
     <div>
-      <input {...inputProps} {...props} type="file" name="image" />
+      <RaisedButton containerElement="label" label="Upload" fullWidth={true}>
+        <input type="file" {...inputProps} {...props} />
+      </RaisedButton>
       {touched &&
         ((error && (
           <span style={{ color: "red", display: "block", padding: "10px" }}>
@@ -64,9 +73,16 @@ export const textArea = ({
   meta: { touched, error, warning }
 }) => (
   <div>
-    <label>{label}</label>
     <div>
-      <textarea {...input} placeholder={label} type={type} />
+      <TextField
+        {...input}
+        placeholder={label}
+        type={type}
+        multiLine={true}
+        rows={4}
+        floatingLabelText={label}
+        fullWidth={true}
+      />
       {touched &&
         ((error && (
           <span style={{ color: "red", display: "block", padding: "10px" }}>
