@@ -37,21 +37,21 @@ module.exports = function(app, path, client) {
             return res.status(400).json({ error: err });
           }
           client
-            .textDetection(
+            .labelDetection(
               `./uploads/${req.file.filename + req.file.originalname}`
             )
             .then(results => {
-              const fullTextAnnotation = results[0].fullTextAnnotation;
+              const altText = results[0].labelAnnotations[0].description;
               product = new Product();
               product.name = req.body.name;
               product.description = req.body.description;
               product.price = req.body.price;
               product.image = req.file.filename + req.file.originalname;
-              product.altText = fullTextAnnotation.text;
+              product.altText = altText;
               product.save(function(err) {
                 if (err) {
                   console.log(err);
-                  return err;
+                  return res.status(200).json({ response: "Error" });
                 }
                 res.status(200).json({ response: "good" });
               });

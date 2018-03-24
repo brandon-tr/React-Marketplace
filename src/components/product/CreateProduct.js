@@ -14,14 +14,18 @@ class CreateProduct extends Component {
     }
   };
   handleChange = file => {
-    let getImage = file.target.files[0];
-    let img;
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      img = reader.result;
-      this.props.addImage(img);
-    };
-    reader.readAsDataURL(getImage);
+    if (file) {
+      let getImage = file.target.files[0];
+      if (getImage) {
+        let img;
+        let reader = new FileReader();
+        reader.onloadend = () => {
+          img = reader.result;
+          this.props.addImage(img);
+        };
+        reader.readAsDataURL(getImage);
+      }
+    }
   };
   render() {
     return (
