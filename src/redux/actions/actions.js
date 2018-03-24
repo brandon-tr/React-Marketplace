@@ -7,6 +7,24 @@ export const returnHi = () => {
   };
 };
 
+export const addImage = img => {
+  return {
+    type: "UPLOAD_IMAGE",
+    payload: img
+  };
+};
+
+export const imgError = () => {
+  return {
+    type: "IMAGE_ERROR",
+    payload: {
+      response: {
+        data: { error: "Image not found, please reupload the image" }
+      }
+    }
+  };
+};
+
 export const register = user => {
   return dispatch =>
     axios
@@ -39,9 +57,34 @@ export const login = user => {
       });
 };
 
-export const addProduct = (product, file) => {
+export const getProducts = () => {
+  return dispatch =>
+    axios
+      .get("/listProducts")
+      .then(res => {
+        dispatch({ type: "LIST_PRODUCTS", payload: res });
+      })
+      .catch(res => {
+        dispatch({ type: "ERROR_PRODUCT_LIST", payload: res });
+      });
+};
+
+export const imageRecognition = () => {
+  return dispatch =>
+    axios
+      .get("/getImageText")
+      .then(res => {
+        dispatch({ type: "IMAGE_ALT_TEXT", payload: res });
+      })
+      .catch(res => {
+        dispatch({ type: "IMAGE_ALT_TEXT_ERROR", payload: res });
+      });
+};
+
+export const addProduct = product => {
+  console.log(product);
   const fd = new FormData();
-  fd.append("image", file.target.files[0], file.target.files[0].name);
+  fd.append("image", product.image[0], product.image[0].name);
   fd.append("name", product.name);
   fd.append("description", product.description);
   fd.append("price", product.price);

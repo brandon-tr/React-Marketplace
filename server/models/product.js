@@ -9,8 +9,9 @@ var NameValidator = [
     message: "Name should be more than 2 characters"
   }),
   validate({
-    validator: "isAlpha",
-    message: "Name should contain only letters"
+    validator: "matches",
+    arguments: /^[a-zA-Z0-9\s]+$/,
+    message: "Name should contain only letters and numbers"
   })
 ];
 var PriceValidator = [
@@ -22,8 +23,8 @@ var PriceValidator = [
 var DescriptionValidator = [
   validate({
     validator: "isLength",
-    arguments: [10],
-    message: "Description should be at least 10 characters long"
+    arguments: [2],
+    message: "Description should be at least 2 characters long"
   })
 ];
 
@@ -34,15 +35,23 @@ var ProductSchema = new mongoose.Schema(
       required: [true, "You need to have a first name"],
       validate: NameValidator
     },
-    name: {
+    description: {
       type: String,
-      required: [true, "You need to have a first name"],
+      required: [true, "You need to have a description"],
       validate: DescriptionValidator
     },
     price: {
-      type: Number,
+      type: String,
       required: [true, "You need to have a password"],
       validate: PriceValidator
+    },
+    image: {
+      type: String,
+      required: [true, "You need to have an image"]
+    },
+    altText: {
+      type: String,
+      required: [true, "Error retrieving alt-text, please reupload"]
     }
   },
   { timestamps: true }

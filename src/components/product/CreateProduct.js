@@ -2,15 +2,26 @@ import React, { Component } from "react";
 import Form from "./CreateProductForm";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { addProduct } from "../../redux/actions/actions";
+import { addProduct, addImage, imgError } from "../../redux/actions/actions";
 import "./style.css";
 
 class CreateProduct extends Component {
   handleSubmit = e => {
-    this.props.addProduct(e, this.file);
+    if (e.image[0]) {
+      this.props.addProduct(e);
+    } else {
+      this.props.imgError();
+    }
   };
   handleChange = file => {
-    this.file = file;
+    let getImage = file.target.files[0];
+    let img;
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      img = reader.result;
+      this.props.addImage(img);
+    };
+    reader.readAsDataURL(getImage);
   };
   render() {
     return (
@@ -24,19 +35,25 @@ class CreateProduct extends Component {
             <span className="success">{this.props.status} </span>
           )
         ) : null}
+        <div className="products">
+          {this.props.image ? <img src={this.props.image} /> : null}
+        </div>
       </div>
     );
   }
 }
 function mapStateToProps(state) {
   return {
-    status: state.product
+    status: state.addProduct,
+    image: state.image
   };
 }
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addProduct: addProduct
+      addProduct: addProduct,
+      addImage: addImage,
+      imgError: imgError
     },
     dispatch
   );

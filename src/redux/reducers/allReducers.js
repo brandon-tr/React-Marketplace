@@ -3,14 +3,18 @@ import emptyReducer from "./emptyReducer";
 import { reducer as formReducer } from "redux-form";
 import { routerReducer } from "react-router-redux";
 import authReducer from "./authReducer";
-import productReducer from "./productReducer";
+import addProductReducer from "./addProductReducer";
+import listProductReducer from "./listProductReducer";
+import imageReducer from "./imageReducer";
 
 const allReducers = combineReducers({
   emptyReducer: emptyReducer,
-  product: productReducer,
+  addProduct: addProductReducer,
+  listProduct: listProductReducer,
   auth: authReducer,
   form: formReducer,
-  router: routerReducer
+  router: routerReducer,
+  image: imageReducer
 });
 
 export default allReducers;

@@ -5,6 +5,7 @@ import Login from "./authentication/login";
 import CreateProduct from "./product/CreateProduct";
 import { Route, Link } from "react-router-dom";
 import { AuthRoute, CheckAuthPages } from "../routeAuth";
+import productList from "./product/productList";
 
 const Routes = () => {
   return (
@@ -35,7 +36,7 @@ const Routes = () => {
       <CheckAuthPages path="/register" component={Register} />
       <CheckAuthPages path="/login" component={Login} />
       <AuthRoute path="/product-creation" component={CreateProduct} />
-      <Route path="/product-list" component={CreateProduct} />
+      <Route path="/product-list" component={productList} />
       <Route path="/product/:id" component={CreateProduct} />
     </div>
   );
