@@ -53,7 +53,13 @@ export const uploadField = ({
 }) => (
   <div>
     <div>
-      <RaisedButton containerElement="label" label="Upload" fullWidth={true}>
+      <RaisedButton
+        containerElement="label"
+        label="Upload Image"
+        fullWidth={true}
+        icon={<i className="fas fa-upload" />}
+        secondary={true}
+      >
         <input type="file" {...inputProps} {...props} />
       </RaisedButton>
       {touched &&

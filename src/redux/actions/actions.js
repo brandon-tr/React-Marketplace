@@ -81,19 +81,35 @@ export const imageRecognition = () => {
       });
 };
 
+export function loadingStart() {
+  return {
+    type: "SEND_REQUEST"
+  };
+}
+
+const loadingEnd = () => {
+  return {
+    type: "GOT_RESPONSE"
+  };
+};
+
 export const addProduct = product => {
   const fd = new FormData();
   fd.append("image", product.image[0], product.image[0].name);
   fd.append("name", product.name);
   fd.append("description", product.description);
   fd.append("price", product.price);
-  return dispatch =>
+  return dispatch => {
+    dispatch(loadingStart());
     axios
       .post("/addProduct", fd)
       .then(res => {
+        dispatch(loadingEnd());
         dispatch({ type: "ADD_PRODUCT", payload: res });
       })
       .catch(res => {
+        dispatch(loadingEnd());
         dispatch({ type: "ERROR_PRODUCT", payload: res });
       });
+  };
 };

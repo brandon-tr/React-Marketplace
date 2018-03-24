@@ -6,6 +6,7 @@ import authReducer from "./authReducer";
 import addProductReducer from "./addProductReducer";
 import listProductReducer from "./listProductReducer";
 import imageReducer from "./imageReducer";
+import loadingReducer from "./loadingReducer";
 
 const allReducers = combineReducers({
   emptyReducer: emptyReducer,
@@ -14,7 +15,8 @@ const allReducers = combineReducers({
   auth: authReducer,
   form: formReducer,
   router: routerReducer,
-  image: imageReducer
+  image: imageReducer,
+  loading: loadingReducer
 });
 
 export default allReducers;

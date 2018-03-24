@@ -15,12 +15,19 @@ class ProductList extends Component {
       this.props.products.length > 0 ? (
         this.props.products.map(product => {
           return [
-            <li key={keyGen()}>
-              <img src={`/getImage/${product.image}`} alt={product.altText} />
-            </li>,
-            <li key={keyGen()} id="price">
-              ${product.price}
-            </li>
+            <div class="col-3">
+              <span key={keyGen()} className="crop">
+                <img
+                  src={`/getImage/${product.image}`}
+                  alt={product.altText}
+                  id="productImage"
+                  class="img-fluid"
+                />
+              </span>
+              <span key={keyGen()} id="price">
+                ${product.price}
+              </span>
+            </div>
           ];
         })
       ) : (
@@ -33,7 +40,7 @@ class ProductList extends Component {
       <div>
         <p>Welcome to Products page</p>
         <div className="products">
-          <ul>{products}</ul>
+          <div class="row">{products}</div>
         </div>
       </div>
     );

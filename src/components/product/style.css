@@ -19,3 +19,17 @@
 input[type="file"] {
   display: none;
 }
+#price {
+  display: block;
+}
+.crop {
+  height: 300px;
+  overflow: hidden;
+}
+.crop img {
+  height: 20%;
+  width: auto;
+}
+.white {
+  color: white;
+}

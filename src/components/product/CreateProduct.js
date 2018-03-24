@@ -35,6 +35,7 @@ class CreateProduct extends Component {
           onSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           image={this.props.image}
+          loading={this.props.loading}
         />
         {this.props.status ? (
           this.props.status.error ? (
@@ -50,7 +51,8 @@ class CreateProduct extends Component {
 function mapStateToProps(state) {
   return {
     status: state.addProduct,
-    image: state.image
+    image: state.image,
+    loading: state.loading
   };
 }
 function matchDispatchToProps(dispatch) {

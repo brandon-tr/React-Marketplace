@@ -8,7 +8,7 @@ import {
   minNumber01,
   uploadField
 } from "../validations";
-import { RaisedButton } from "material-ui";
+import { RaisedButton, LinearProgress } from "material-ui";
 import "./style.css";
 
 const CreateProductForm = props => {
@@ -48,6 +48,13 @@ const CreateProductForm = props => {
           />
         </div>
       </div>
+      <div className="pb-5 w-100">
+        <div>
+          {props.loading ? (
+            <LinearProgress mode="indeterminate" color="red" />
+          ) : null}
+        </div>
+      </div>
       <div className="pb-5">
         <div>
           <Field
@@ -62,9 +69,14 @@ const CreateProductForm = props => {
         {props ? props.image ? <img src={props.image} /> : null : null}
       </div>
       <div>
-        <RaisedButton primary={true} type="submit" fullWidth={true}>
-          Submit
-        </RaisedButton>
+        <RaisedButton
+          icon={<i className="fas fa-location-arrow white" />}
+          backgroundColor="#a4c639"
+          type="submit"
+          fullWidth={true}
+          label="Submit"
+          labelColor="#ffffff"
+        />
       </div>
     </Form>
   );
