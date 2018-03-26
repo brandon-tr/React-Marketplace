@@ -12,7 +12,10 @@
   width: 270px;
   height: 200px;
 }
-
+.products #desc {
+  height: 200px;
+  overflow: hidden;
+}
 input[type="file"] {
   display: none;
 }
@@ -27,6 +30,10 @@ input[type="file"] {
   height: 20%;
   width: auto;
 }
-.white {
-  color: white;
+.colorWhite {
+  color: "#fff";
+}
+.col-centered {
+  float: none;
+  margin: 0 auto;
 }
