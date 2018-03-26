@@ -66,7 +66,11 @@ const CreateProductForm = props => {
         </div>
       </div>
       <div className="pb-5 products">
-        {props ? props.image ? <img src={props.image} /> : null : null}
+        {props ? (
+          props.image ? (
+            <img src={props.image} alt="loading-bar" />
+          ) : null
+        ) : null}
       </div>
       <div>
         <RaisedButton

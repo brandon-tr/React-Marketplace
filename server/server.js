@@ -18,3 +18,6 @@ userHandler(app, path);
 productHandler(app, path, client);
 
 const server = app.listen(port, console.log(`listening on ${port}`));
+// app.get("*", function(request, response) {
+//   response.sendFile(path.resolve(__dirname, "./build/index.html"));
+// });

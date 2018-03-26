@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { getProducts } from "../../redux/actions/actions";
 import keyGen from "../../idGen";
+import { Card, CardMedia, CardTitle, CardText } from "material-ui";
 
 class ProductList extends Component {
   componentDidMount() {
@@ -15,18 +16,18 @@ class ProductList extends Component {
       this.props.products.length > 0 ? (
         this.props.products.map(product => {
           return [
-            <div class="col-3">
-              <span key={keyGen()} className="crop">
-                <img
-                  src={`/getImage/${product.image}`}
-                  alt={product.altText}
-                  id="productImage"
-                  class="img-fluid"
-                />
-              </span>
-              <span key={keyGen()} id="price">
-                ${product.price}
-              </span>
+            <div className="col-sm-3 pb-4" key={keyGen()}>
+              <Card>
+                <CardMedia>
+                  <img
+                    src={`/getImage/${product.image}`}
+                    alt={product.altText}
+                  />
+                </CardMedia>
+                <CardTitle title={product.name} />
+                <CardText>{product.description}</CardText>
+                <CardText>${product.price}</CardText>
+              </Card>
             </div>
           ];
         })
@@ -40,7 +41,7 @@ class ProductList extends Component {
       <div>
         <p>Welcome to Products page</p>
         <div className="products">
-          <div class="row">{products}</div>
+          <div className="row">{products}</div>
         </div>
       </div>
     );

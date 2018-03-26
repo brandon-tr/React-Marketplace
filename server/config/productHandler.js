@@ -50,10 +50,18 @@ module.exports = function(app, path, client) {
               product.altText = altText;
               product.save(function(err) {
                 if (err) {
-                  console.log(err);
-                  return res.status(200).json({ response: "Error" });
+                  if (err.code === 11000) {
+                    return res.status(400).json({
+                      error: "Error: Product Name is already used"
+                    });
+                  }
+                  return res
+                    .status(400)
+                    .json({ error: "Error: Please resubmit the form" });
                 }
-                res.status(200).json({ response: "good" });
+                return res
+                  .status(200)
+                  .json({ response: "Product Added Successfully" });
               });
             })
             .catch(err => {

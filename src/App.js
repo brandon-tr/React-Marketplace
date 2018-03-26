@@ -10,11 +10,9 @@ import Routes from "./components/routes";
 class App extends Component {
   render() {
     return (
-      <div>
-        <MuiThemeProvider>
-          <Routes />
-        </MuiThemeProvider>
-      </div>
+      <MuiThemeProvider>
+        <Routes />
+      </MuiThemeProvider>
     );
   }
 }

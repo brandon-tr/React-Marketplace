@@ -1,5 +1,3 @@
-import update from "immutability-helper";
-
 export default (state = false, action) => {
   switch (action.type) {
     case "SEND_REQUEST":
