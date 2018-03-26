@@ -7,7 +7,6 @@ import { Route, Link } from "react-router-dom";
 import { AuthRoute, CheckAuthPages } from "../routeAuth";
 import productList from "./product/productList";
 import { AppBar, MenuItem, Drawer } from "material-ui";
-import "./route.css";
 
 class Routes extends Component {
   constructor(props) {
@@ -18,38 +17,48 @@ class Routes extends Component {
   handleToggle = () => this.setState({ open: !this.state.open });
 
   handleClose = () => this.setState({ open: false });
+  style = {
+    appBarTitle: {
+      paddingLeft: "200px"
+    },
+    menuItem: {
+      color: "white"
+    },
+    menuTitle: {
+      backgroundColor: "#4267b2",
+      color: "white"
+    }
+  };
 
   render() {
     return (
       <div>
         <div>
-          <AppBar
-            title="Marketplace"
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-            onLeftIconButtonClick={this.handleToggle}
-            className="appBar"
-            color="#fff"
-          >
+          <AppBar title="Marketplace" onLeftIconButtonClick={this.handleToggle}>
             <MenuItem
               className="d-none d-sm-none d-md-flex"
               primaryText="Home"
+              style={this.style.menuItem}
               containerElement={<Link to="/" />}
             />
             <MenuItem
               className="d-none d-sm-none d-md-flex"
               primaryText="Product List"
+              style={this.style.menuItem}
               containerElement={<Link to="/product-list" />}
             />
             {localStorage.getItem("token") ? (
               <MenuItem
                 className="d-none d-sm-none d-md-flex"
                 primaryText="Create Product"
+                style={this.style.menuItem}
                 containerElement={<Link to="/product-creation" />}
               />
             ) : (
               <MenuItem
                 className="d-none d-sm-none d-md-flex"
                 primaryText="Login"
+                style={this.style.menuItem}
                 containerElement={<Link to="/login" />}
               />
             )}
@@ -57,20 +66,21 @@ class Routes extends Component {
               <MenuItem
                 className="d-none d-sm-none d-md-flex"
                 primaryText="Register"
+                style={this.style.menuItem}
                 containerElement={<Link to="/register" />}
               />
             ) : null}
           </AppBar>
+
           <Drawer
             docked={false}
-            width={200}
+            width={240}
             open={this.state.open}
             onRequestChange={open => this.setState({ open })}
           >
-            <div className="title pb-3 pt-3 pl-2 w-100">
+            <div className="pb-3 pt-3 pl-2 w-100 bg-primary text-white">
               <h4>Material Admin</h4>
             </div>
-            <hr />
             <MenuItem
               primaryText="Home"
               containerElement={<Link to="/" />}
