@@ -61,7 +61,11 @@ class ProductList extends Component {
                   <ImageZoom
                     image={{
                       src: `/getImage/${product.image}`,
-                      alt: product.altText
+                      alt: product.altText,
+                      style: {
+                        width: "100%",
+                        height: "200px"
+                      }
                     }}
                   />
                 </CardMedia>

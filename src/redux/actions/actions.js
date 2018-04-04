@@ -108,10 +108,12 @@ export const getProducts = () => {
 };
 
 export const checkOut = (id, price) => {
+  const token = { id: id };
   return dispatch =>
     axios
       .post(`/checkOut/${id}`, { price: price })
       .then(res => {
+        dispatch(getUserInfo(token));
         dispatch({ type: "CHECKOUT", payload: res });
       })
       .catch(res => {

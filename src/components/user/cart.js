@@ -24,7 +24,11 @@ class Cart extends Component {
                   <ImageZoom
                     image={{
                       src: `/getImage/${item.image}`,
-                      alt: item.altText
+                      alt: item.altText,
+                      style: {
+                        width: "150px",
+                        height: "100px"
+                      }
                     }}
                   />
                 }

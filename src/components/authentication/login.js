@@ -4,12 +4,20 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { login, getUserInfo, getTokenInfo } from "../../redux/actions/actions";
 import "./style.css";
+import { parseJwt } from "../../App";
 
 class Login extends Component {
   handleSubmit = e => {
     this.props.login(e);
   };
   render() {
+    if (localStorage.getItem("token")) {
+      if (!this.props.userInfo && localStorage.getItem("token")) {
+        const decoded = parseJwt(localStorage.getItem("token"));
+        this.props.getTokenInfo(decoded);
+        this.props.getUserInfo(decoded);
+      }
+    }
     return (
       <div>
         <h1>Register</h1>
