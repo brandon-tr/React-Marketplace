@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Form from "./loginForm";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { login } from "../../redux/actions/actions";
+import { login, getUserInfo, getTokenInfo } from "../../redux/actions/actions";
 import "./style.css";
 
 class Login extends Component {
@@ -34,7 +34,9 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      login: login
+      login: login,
+      getUserInfo: getUserInfo,
+      getTokenInfo: getTokenInfo
     },
     dispatch
   );

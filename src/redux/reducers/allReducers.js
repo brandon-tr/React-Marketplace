@@ -7,6 +7,10 @@ import addProductReducer from "./addProductReducer";
 import listProductReducer from "./listProductReducer";
 import imageReducer from "./imageReducer";
 import loadingReducer from "./loadingReducer";
+import userInfo from "./userInfo";
+import retrieveUser from "./retrieveUser";
+import sockets from "./sockets";
+import checkOut from "./checkOut";
 
 const allReducers = combineReducers({
   emptyReducer: emptyReducer,
@@ -16,7 +20,11 @@ const allReducers = combineReducers({
   form: formReducer,
   router: routerReducer,
   image: imageReducer,
-  loading: loadingReducer
+  loading: loadingReducer,
+  tokenInfo: userInfo,
+  userInfo: retrieveUser,
+  sockets: sockets,
+  checkOut: checkOut
 });
 
 export default allReducers;

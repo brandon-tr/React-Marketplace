@@ -1,13 +1,16 @@
-var mongoose = require("mongoose");
-var jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const secret = "SuperSecret";
-var User = mongoose.model("User");
-var bcrypt = require("bcrypt");
+const User = mongoose.model("User");
+const bcrypt = require("bcrypt");
 
 module.exports = function(app, path) {
   app.get("/testApi", function(req, res) {
     res.json("Heloo");
   });
+  // app.get("*", function(req, res) {
+  //   console.log(req.ip);
+  // });
   app.post("/register", function(req, res) {
     let user = new User(req.body);
     user.save(function(err) {
@@ -32,7 +35,7 @@ module.exports = function(app, path) {
         }
         return res.status(400).json({ response: errorList });
       }
-      const token = jwt.sign(req.body, secret);
+      const token = jwt.sign({ name: user.firstName, id: user._id }, secret);
       return res
         .status(200)
         .json({ token: token, response: "Successfully Registered User" });
@@ -49,18 +52,84 @@ module.exports = function(app, path) {
             res.status(401).json({ response: "Please try again" });
           } else {
             if (response) {
-              const token = jwt.sign(req.body, secret);
+              const token = jwt.sign(
+                { name: user.firstName, id: user._id },
+                secret
+              );
               return res
                 .status(200)
                 .json({ token: token, success: "Successfully logged in" });
             } else {
-              res.status(401).json({ response: "Please try again" });
+              return res.status(401).json({ response: "Please try again" });
             }
           }
         });
       } else {
-        res.status(401).json({ response: "Please try again" });
+        return res.status(401).json({ response: "Please try again" });
       }
+    });
+  });
+  app.get("/getUser/:id", function(req, res) {
+    User.findOne({ _id: req.params.id }, function(err, user) {
+      if (err) {
+        res.status("400").json({ error: "User Not Found" });
+        return "error";
+      }
+      let name = user.firstName + " " + user.lastName;
+      return res.status(200).json({
+        name: name,
+        email: user.email,
+        money: user.money,
+        cart: user.cart
+      });
+    });
+  });
+  app.post("/addCart/:id", function(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $push: {
+          cart: {
+            id: req.body._id,
+            name: req.body.name,
+            price: req.body.price,
+            image: req.body.image,
+            altText: req.body.altText
+          }
+        }
+      },
+      function(err, user) {
+        if (err) {
+          return res.status(400).json({ error: "Error adding to cart" });
+        }
+        user.save(function(err) {
+          return res.status(200).json({ response: "Good" });
+        });
+      }
+    );
+  });
+  app.post("/checkOut/:id", function(req, res) {
+    User.findOne({ _id: req.params.id }, function(err, user) {
+      if (err) {
+        return res.status(401).json({ error: "User not Found" });
+      }
+      if (user.money < req.body.price) {
+        return res.status(401).json({ error: "You have too little money" });
+      }
+      let price = req.body.price;
+      price = price * -1;
+      User.update(
+        { _id: req.params.id },
+        { $inc: { money: price }, $set: { cart: [] } },
+        function(err, affected) {
+          if (err) {
+            return res.status(400).json({ error: "Error adding to cart" });
+          }
+          return res
+            .status(200)
+            .json({ response: "Successfully bought product" });
+        }
+      );
     });
   });
 };

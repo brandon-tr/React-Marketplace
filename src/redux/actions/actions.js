@@ -7,6 +7,44 @@ export const returnHi = () => {
   };
 };
 
+export const newConnection = data => {
+  return {
+    type: "NEW_CONNECTION",
+    payload: data
+  };
+};
+
+export const getTokenInfo = token => {
+  return {
+    type: "GET_TOKEN_INFO",
+    payload: token
+  };
+};
+export const getUserInfo = token => {
+  return dispatch =>
+    axios
+      .get(`/getUser/${token.id}`)
+      .then(res => {
+        dispatch({ type: "GOT_USER", payload: res });
+      })
+      .catch(res => {
+        console.log(res);
+      });
+};
+
+export const addToCart = (token, product) => {
+  return dispatch =>
+    axios
+      .post(`/addCart/${token.id}`, product)
+      .then(res => {
+        dispatch(getUserInfo(token));
+        dispatch({ type: "ADD_CART", payload: res, token: token });
+      })
+      .catch(res => {
+        dispatch({ type: "ADD_CART_ERROR", payload: res });
+      });
+};
+
 export const addImage = img => {
   return {
     type: "UPLOAD_IMAGE",
@@ -66,6 +104,18 @@ export const getProducts = () => {
       })
       .catch(res => {
         dispatch({ type: "ERROR_PRODUCT_LIST", payload: res });
+      });
+};
+
+export const checkOut = (id, price) => {
+  return dispatch =>
+    axios
+      .post(`/checkOut/${id}`, { price: price })
+      .then(res => {
+        dispatch({ type: "CHECKOUT", payload: res });
+      })
+      .catch(res => {
+        dispatch({ type: "CHECKOUT_ERROR", payload: res });
       });
 };
 

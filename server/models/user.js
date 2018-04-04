@@ -50,7 +50,20 @@ var UserSchema = new mongoose.Schema(
       unique: true,
       required: [true, "You need to have a email"],
       validate: EmailValidator
-    }
+    },
+    money: {
+      type: Number,
+      default: 10000
+    },
+    cart: [
+      {
+        name: String,
+        id: String,
+        image: String,
+        altText: String,
+        price: String
+      }
+    ]
   },
   { timestamps: true }
 );

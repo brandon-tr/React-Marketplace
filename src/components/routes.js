@@ -3,10 +3,12 @@ import Home from "./home";
 import Register from "./authentication/register";
 import Login from "./authentication/login";
 import CreateProduct from "./product/CreateProduct";
+import UserPage from "./user/userPage";
 import { Route, Link } from "react-router-dom";
 import { AuthRoute, CheckAuthPages } from "../routeAuth";
 import productList from "./product/productList";
 import { AppBar, MenuItem, Drawer } from "material-ui";
+import cart from "./user/cart";
 
 class Routes extends Component {
   constructor(props) {
@@ -69,6 +71,22 @@ class Routes extends Component {
                 style={this.style.menuItem}
                 containerElement={<Link to="/register" />}
               />
+            ) : this.props.token ? (
+              <MenuItem
+                className="d-none d-sm-none d-md-flex"
+                primaryText="Account"
+                style={this.style.menuItem}
+                containerElement={<Link to={`/user/${this.props.token.id}`} />}
+              />
+            ) : null}
+            {localStorage.getItem("token") === null ? null : this.props.token &&
+            this.props.user ? (
+              <MenuItem
+                className="d-none d-sm-none d-md-flex"
+                primaryText={`Cart (${this.props.user.cart.length})`}
+                style={this.style.menuItem}
+                containerElement={<Link to={`/cart/${this.props.token.id}`} />}
+              />
             ) : null}
           </AppBar>
 
@@ -79,7 +97,7 @@ class Routes extends Component {
             onRequestChange={open => this.setState({ open })}
           >
             <div className="pb-3 pt-3 pl-2 w-100 bg-primary text-white">
-              <h4>Material Admin</h4>
+              <h4>Menu</h4>
             </div>
             <MenuItem
               primaryText="Home"
@@ -113,14 +131,24 @@ class Routes extends Component {
                 containerElement={<Link to="/register" />}
                 onClick={this.handleClose}
               />
+            ) : this.props.token && this.props.user ? (
+              <MenuItem
+                primaryText={`Cart (${this.props.user.cart.length})`}
+                containerElement={<Link to={`/cart/${this.props.token.id}`} />}
+                onClick={this.handleClose}
+              />
             ) : null}
+            <hr />
           </Drawer>
         </div>
         <div className="container">
+          Online Users: {this.props.sockets.onlineUsers}
           <Route path="/" exact component={Home} />
           <CheckAuthPages path="/register" component={Register} />
           <CheckAuthPages path="/login" component={Login} />
           <AuthRoute path="/product-creation" component={CreateProduct} />
+          <AuthRoute path="/user/:id" component={UserPage} />
+          <AuthRoute path="/cart" component={cart} />
           <Route path="/product-list" component={productList} />
           <Route path="/product/:id" component={CreateProduct} />
         </div>

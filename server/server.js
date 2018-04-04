@@ -23,6 +23,17 @@ userHandler(app, path);
 productHandler(app, path, client, dbx);
 
 const server = app.listen(port, console.log(`listening on ${port}`));
+var onlineUsers = 0;
+const io = require("socket.io")(server);
+io.on("connection", function(socket) {
+  onlineUsers += 1;
+  io.emit("Online Users", onlineUsers);
+  socket.on("disconnect", function() {
+    onlineUsers -= 1;
+    io.emit("Online Users", onlineUsers);
+  });
+});
+
 // app.get("*", function(request, response) {
 //   response.sendFile(path.resolve(__dirname, "./build/index.html"));
 // });

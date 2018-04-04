@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { getProducts } from "../../redux/actions/actions";
+import { getProducts, addToCart } from "../../redux/actions/actions";
 import keyGen from "../../idGen";
 import {
   Card,
@@ -12,6 +12,7 @@ import {
   FlatButton,
   Snackbar
 } from "material-ui";
+import ImageZoom from "react-medium-image-zoom";
 
 class ProductList extends Component {
   componentDidMount() {
@@ -28,9 +29,10 @@ class ProductList extends Component {
   }
 
   handleClick = item => {
+    this.props.addToCart(this.props.tokenInfo, item);
     this.setState({
       open: true,
-      item: item
+      item: item.name
     });
   };
 
@@ -56,9 +58,11 @@ class ProductList extends Component {
             <div className="col-sm-3 pb-4" key={keyGen()}>
               <Card className="products">
                 <CardMedia>
-                  <img
-                    src={`/getImage/${product.image}`}
-                    alt={product.altText}
+                  <ImageZoom
+                    image={{
+                      src: `/getImage/${product.image}`,
+                      alt: product.altText
+                    }}
                   />
                 </CardMedia>
                 <CardTitle title={product.name} />
@@ -74,7 +78,7 @@ class ProductList extends Component {
                       backgroundColor="#a4c639"
                       hoverColor="#8AA62F"
                       labelStyle={style.labelStyle}
-                      onClick={this.handleClick.bind(this, product.name)}
+                      onClick={this.handleClick.bind(this, product)}
                     />
                   </CardActions>
                 </div>
@@ -108,13 +112,15 @@ class ProductList extends Component {
 
 function mapStateToProps(state) {
   return {
-    products: state.listProduct
+    products: state.listProduct,
+    tokenInfo: state.tokenInfo
   };
 }
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      getProducts: getProducts
+      getProducts: getProducts,
+      addToCart: addToCart
     },
     dispatch
   );
